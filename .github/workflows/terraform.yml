@@ -76,9 +76,9 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: terraform init
 
-    # Checks that all Terraform configuration files adhere to a canonical format
-    - name: Terraform Format
-      run: terraform fmt -check
+    # Add validation
+    - name: Terraform validation
+      run: terraform validate
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
