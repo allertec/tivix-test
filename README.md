@@ -25,6 +25,7 @@ in the inbound for ALB SG.
 6. Docker images store in ECR, so we could actually use whatever AMI wcich will have docker installed.
 7. Setup Route 53 with hosted zone where we could attach particular FQDN to our ALB. We could also set here the alarms or e.g. Failover if we want to use app in other region.
 8. Think about termination protection
+9. Create special IAM roles with restricted persmissions.
 
 To be honest I recommend to push above from EC2 to ECS Fargate (but not based on EC2). Saves time on e.g. maintenance like upgradeing OS. Better and faster deployment.
 
