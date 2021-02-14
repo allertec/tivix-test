@@ -1,5 +1,6 @@
 # Basic Task
 ### HOW TO
+```Before I start the description of I have achieved the goal I would like to say, that AWS ACCount URL was incorrectly sent to me. Not sure if this is a part of the test, but anyway figured it out too :)```
 
 1. Under VPC service => Route teables => changed entry 0.0.0.0/2X to 0.0.0.0/0.
 2. I have used System Manager and Session Manager to access machine. The docker container was stopped. I have started it. Then I have used "docker cp" command to get the /code to localhost
