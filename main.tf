@@ -206,6 +206,15 @@ resource "aws_instance" "recngx01" {
     }
 }
 
+resource "aws_lb_target_group_attachment" "recngx01" {
+  target_group_arn = aws_lb_target_group.alb_tg.arn
+  target_id        = aws_instance.recngx01.id
+  port             = 80
+  depends_on       = [
+    aws_instance.recngx01
+  ]
+}
+
 resource "aws_instance" "recngx02" {
     ami                         = var.image_id
     availability_zone           = "us-west-1a"
@@ -228,4 +237,44 @@ resource "aws_instance" "recngx02" {
       Name = "recngx02"
       provisioner = "terraform"
     }
+}
+
+resource "aws_lb_target_group_attachment" "recngx02" {
+  target_group_arn = aws_lb_target_group.alb_tg.arn
+  target_id        = aws_instance.recngx02.id
+  port             = 80
+  depends_on       = [
+    aws_instance.recngx02
+  ]
+}
+
+# Setup Cloudwatch Alarm
+resource "aws_sns_topic" "my-topic" {
+  name_prefix = "ec2-alerts"
+}
+# EMail is not supported, but maybe we could use some HTTP to send it to some Instant messaging solution like Slack, Teams
+#resource "aws_sns_topic_subscription" "email" {
+#  protocol  = "email"
+#  topic_arn = aws_sns_topic.my-topic.arn
+#  endpoint  = "weird_tests@protonmail.com"
+#}
+
+resource "aws_cloudwatch_metric_alarm" "my_alarm" {
+    alarm_name          = "my_alarm"
+    comparison_operator = "LessThanThreshold"
+    evaluation_periods  = "1"
+    metric_name         = "HealthyHostCount"
+    namespace           = "AWS/ApplicationELB"
+    period              = "60"
+    statistic           = "Average"
+    threshold           = "2.0"
+    alarm_description   = ""
+    alarm_actions       = [aws_sns_topic.my-topic.arn]
+    dimensions = {
+        TargetGroup  = aws_lb_target_group.alb_tg.arn_suffix
+        LoadBalancer = aws_lb.alb.arn_suffix
+    }
+    depends_on = [
+      aws_lb_target_group.alb_tg
+    ]
 }
