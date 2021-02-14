@@ -28,3 +28,6 @@ in the inbound for ALB SG.
 To be honest I recommend to push above from EC2 to ECS Fargate (but not based on EC2). Saves time on e.g. maintenance like upgradeing OS. Better and faster deployment.
 
 Also we could store frontend files in S3 bucket and then serve it via Cloudfront which actually resolves the problem of servers maintenance and failover. It is realiable too. This could be a nice DDoS and Denial of Wallet solution.
+
+# Bonus Task No 4
+In the **main.tf** there is a section called: **Setup Cloudwatch Alarm**. Unfortunately, I can't add topic subscription as email, so this could be done manually. This is a simple setup of alarm which looks into HealthyHost metric. If we have below 2 working instance I will get notification. 
