@@ -1,6 +1,6 @@
 # Basic Task
 ### HOW TO
-```Before I start the description of I have achieved the goal I would like to say, that AWS ACCount URL was incorrectly sent to me. Not sure if this is a part of the test, but anyway figured it out too :)```
+Before I start the description of I have achieved the goal I would like to say, that AWS ACCount URL was incorrectly sent to me. Not sure if this is a part of the test, but anyway figured it out too :)
 
 1. Under VPC service => Route teables => changed entry 0.0.0.0/2X to 0.0.0.0/0.
 2. I have used System Manager and Session Manager to access machine. The docker container was stopped. I have started it. Then I have used "docker cp" command to get the /code to localhost
@@ -24,10 +24,11 @@ in the inbound for ALB SG.
 5. Add Autoscaling setup, so we could have High Availability
 6. Docker images store in ECR, so we could actually use whatever AMI wcich will have docker installed.
 7. Setup Route 53 with hosted zone where we could attach particular FQDN to our ALB. We could also set here the alarms or e.g. Failover if we want to use app in other region.
+8. Think about termination protection
 
 To be honest I recommend to push above from EC2 to ECS Fargate (but not based on EC2). Saves time on e.g. maintenance like upgradeing OS. Better and faster deployment.
 
 Also we could store frontend files in S3 bucket and then serve it via Cloudfront which actually resolves the problem of servers maintenance and failover. It is realiable too. This could be a nice DDoS and Denial of Wallet solution.
 
 # Bonus Task No 4
-In the **main.tf** there is a section called: **Setup Cloudwatch Alarm**. Unfortunately, I can't add topic subscription as email, so this could be done manually. This is a simple setup of alarm which looks into HealthyHost metric. If we have below 2 working instance I will get notification. 
+In the **main.tf** there is a section called: **Setup Cloudwatch Alarm**. Unfortunately, I can't add topic subscription as email, so this could be done manually. This is a simple setup of alarm which looks into HealthyHost metric. If we have below 2 working instance I will get notification.
